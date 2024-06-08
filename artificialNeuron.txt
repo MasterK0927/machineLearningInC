@@ -1,0 +1,54 @@
+An artificial neuron has several inputs, and all the inputs or axes foes towards the neuron
+and that neuron sums them up with a certain weight, so each connection of the input will have certain weights
+
+if we have inputs
+
+x1, x2, x3, .... , b
+w1, w2, w3, ....
+
+Weights are effectively representing, how strong these connections are
+
+Neuron, sums the input by multiplying them all with the weights
+y = (x1*w1 + x2*w2 + x3*w3 + ....) + b
+
+So, we can think of our model as a single artificial neuron with a single input and a single connection, with bias b=0;
+
+
+On top of having several connections, neurons does have someting called as bias, which is nothing but something that shifts the entire 
+value of the neuron from left to the right to the negative value or to the positive value, and its not dependent on the input.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Artificial Neural Networks (ANNs)**: ANNs are a type of machine
+learning algorithm inspired by the structure and function of the 
+human brain. They're composed of interconnected nodes or 
+"neurons" that process and transmit information.
+
+Here's how they work:
+
+1. **Layered architecture**: ANNs typically consist of three layers:
+	* **Input layer**: Receives input data.
+	* **Hidden layers** (one or more): Performed complex computations using the input data.
+	* **Output layer**: Generates the final output based on the hidden layers' outputs.
+2. **Node calculations**: Each node in a layer receives input from all nodes in the previous layer, performs a calculation (usually a weighted sum), and then applies an activation 
+function to produce an output.
+3. **Training**: ANNs are trained using a dataset of input-output pairs. The goal is to minimize the error between the network's predictions and the actual outputs.
+
+**Bias in Artificial Neural Networks**:
+
+1. **Biases**: Biases refer to the constant terms added to each node's calculation, which can affect the overall output.
+2. **Effect of bias**: When a bias term is present, it introduces an additional degree of freedom in the node's calculation. This can:
+	* **Shift the decision boundary**: By introducing a bias, the node can move the decision boundary in a specific direction, potentially improving or worsening the model's performance.
+	* **Increase the complexity of the model**: Adding biases to nodes can increase the number of parameters and the complexity of the model, which may lead to overfitting.
+3. **Types of biases**:
+	* **Internal bias**: Built into the node's calculation as a constant term.
+	* **External bias**: Introduced through regularization techniques (e.g., dropout) or data augmentation.
+
+To mitigate the effect of bias:
+
+1. **Regularization techniques**: Use methods like L1 or L2 regularization to penalize large weights and biases, reducing overfitting.
+2. **Data augmentation**: Increase the size of your training dataset by artificially generating more examples, which can help reduce the impact of individual biases.
+3. **Model selection**: Carefully select the architecture and hyperparameters of your ANN to avoid overfitting and ensure generalizability.
+
+In summary, biases in ANNs introduce an additional degree of freedom that can affect the model's performance. While they can be useful for shifting decision boundaries, it's essential 
+to carefully consider their impact and use techniques like regularization or data augmentation to mitigate any negative effects.

@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.ipynb": "jupyter-notebook",
+        "stdlib.h": "c"
+    }
+}
