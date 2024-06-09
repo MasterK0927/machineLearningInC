@@ -202,10 +202,10 @@ int main() {
     float eps = 1e-3;
     float rate = 1e-1;
 
-    for(size_t i=0; i<100*1000; i++){
+    for(size_t i=0; i<1000*1000; i++){
         Xor g = finite_diff(m, eps);
         m = learn(m, g, rate);
-        // printf("Final cost = %f\n", cost(m));
+        printf("Final cost = %f\n", cost(m));
     }
     printf("Final cost = %f\n", cost(m));
 
@@ -213,7 +213,7 @@ int main() {
     printf("\"XOR\" neuron:\n");
     for(size_t i =0 ; i<2; i++){
         for(size_t j=0; j<2; j++){
-            printf("%zu ^ %zu = %f\n", i, j, forward(m, i, j));
+            printf("%zu ^ %zu = %f\n", i, j, forward(m, i, j)); //%zu is for size_t
         }
     }
     printf("------------------------------------------\n");
