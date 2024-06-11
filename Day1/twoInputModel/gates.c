@@ -63,7 +63,7 @@ float cost(float a, float b, float bias){
         float error = y - train_or[i][2];
         result += error*error;
     }
-    result /= TRAIN_COUNT;
+    result /= (float)TRAIN_COUNT;
     return result;
 }
 
@@ -79,7 +79,7 @@ int main(){
     // }
 
     // return 0;
-
+    srand(time(0));
     srand(60);
     float w1 = rand_float();
     float w2 = rand_float();
