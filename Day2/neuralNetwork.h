@@ -213,19 +213,18 @@ void mat_sum(Mat dest, Mat a){
 }
 
 Mat mat_row(Mat m, size_t row){
-    (Mat){
+    return (Mat){
         .rows = 1,
         .cols = m.cols,
         .stride = m.stride,
         .es = &MAT_AT(m, row, 0)
     };
-    return mat_row;
 }
 
 void mat_copy(Mat dest, Mat src){
 
-    NN_ASSERT(dest.rows==src.rows);
-    NN_ASSERT(dest.cols==src.cols);
+    NEURALNETWORK_ASSERT(dest.rows==src.rows);
+    NEURALNETWORK_ASSERT(dest.cols==src.cols);
     for(size_t i=0; i<dest.rows; i++){
         for(size_t j=0; j<dest.cols; j++){
             MAT_AT(dest,i,j) = MAT_AT(src,i,j);
