@@ -1,0 +1,15 @@
+=============== WITHOUT gradientDescent ==================
+initial cost: 370.033051, w: 9.853164
+----------------------------------------------------
+w/o gradientDescent cost: 14.917165, w: 0.423233
+w/o gradientDescent cost: 0.594408, w: 2.314751
+w/o gradientDescent cost: 0.024212, w: 1.936476
+w/o gradientDescent cost: 0.000880, w: 2.012109
+w/o gradientDescent cost: 0.000055, w: 1.996979
+w/o gradientDescent cost: 0.000000, w: 2.000004
+w/o gradientDescent cost: 0.000002, w: 1.999399
+w/o gradientDescent cost: 0.000001, w: 1.999520
+w/o gradientDescent cost: 0.000002, w: 1.999496
+w/o gradientDescent cost: 0.000001, w: 1.999501
+---------------------------------------------------
+final 'w' w/o gradientDescent: 1.999501
