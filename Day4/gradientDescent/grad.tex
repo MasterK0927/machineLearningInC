@@ -30,14 +30,27 @@
 
 \subsection{One Neuron Model}
 
-\begin{tikzpicture}
-	\node at (0,0) {hello};
-\end{tikzpicture}
-
 \begin{align}
 	y &= \sigma(xw + b) \\
 	\sigma(x) &= \frac{1}{1 + e^{-x}} \\
 	\sigma'(x) &= \sigma(x) (1-\sigma(x)) \\
+\end{align}
+
+\subsection{Cost}
+
+\def\pd[#1]{\partial_{#1}}
+\def\avgsum[#1,#2]{\frac{1}{#2}\sum_{#1=0}^{#2}}
+
+\begin{align}
+	v_i &= (x_i w + b) \\
+	a_i &= \sigma(v_i) \\
+	\pd[w] a_i 
+		&= \pd[w](\sigma(v_i))\\
+		&= \sigma(v_i)(1 - \sigma(v_i))\pd[w]v_i\\
+	C &= \avgsum[i,n](a_i - y_i )^2 \\
+	\pd[w] C
+		&= \avgsum[i,n]\pd[w]\left((a_i - y_i)^2 \right) \\
+		&= \avgsum[i,n]2\left(a_i - y_i \right) \pd[w]\left(a_i - y_i\right)\\
 \end{align}
 
 \end{document}

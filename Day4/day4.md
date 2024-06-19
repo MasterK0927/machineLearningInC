@@ -26,3 +26,9 @@ In gradient descent, we uses the exact definition of the derivative, which ultim
 Its very very fast for the rate = 1e-1; compared to finite diff its very very fast and efficient. This method will work like a butter on a bread for the small parameter models,  but for the models having tons of parameters, we use something called Back Propagation.
 
 Back Propagation is a technique of calculating derivatives of complex nested functions. And it is the standard cost function used in the neural network.
+
+
+================================================================
+
+
+

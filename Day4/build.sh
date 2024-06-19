@@ -3,4 +3,4 @@
 
 #enable tracing for seeing whats going on
 set -xe
-clang -Wall -Wextra -o predictingNumberWithGrad predictingNumbers.c -lm
+clang -Wall -Wextra -o predicting gates.c -lm
