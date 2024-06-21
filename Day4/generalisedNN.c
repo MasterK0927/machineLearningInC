@@ -46,7 +46,7 @@ int main(void){
     //trained using the dumb approach of finite differences.
     printf("cost = %f\n", nn_cost(nn, ti, to));
     for(size_t i=0; i<10*1000; i++){
-        nn_finite_diff(nn, nn_g, eps, ti, to);
+        nn_backprop(nn, nn_g, ti, to);
         nn_learn(nn, nn_g, rate);
         printf("%zu: cost = %f\n", i, nn_cost(nn, ti, to));
     }

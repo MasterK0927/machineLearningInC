@@ -3,4 +3,4 @@
 
 #enable tracing for seeing whats going on
 set -xe
-clang -Wall -Wextra -o predicting gates.c -lm
+clang -Wall -Wextra -o predicting generalisedNN.c -lm

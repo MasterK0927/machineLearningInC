@@ -181,12 +181,14 @@ typedef struct {
 #define NN_OUTPUT(nn) (nn).as[(nn).count]
 
 NN nn_alloc(size_t *arch, size_t arch_count);
+void nn_zero(NN nn);
 void nn_print(NN nn, const char *name);
 #define NN_PRINT(nn) nn_print(nn,#nn);
 void nn_rand(NN nn, float low, float high);
 void nn_forward(NN nn);
 float nn_cost(NN nn, Mat ti, Mat to);
 void nn_finite_diff(NN nn, NN nn_g, float eps, Mat ti, Mat to);
+void nn_backprop(NN nn, NN g, Mat ti, Mat to);
 void nn_learn(NN nn, NN nn_g, float rate);
 
 #endif // NEURALNETWORK_H_
@@ -353,7 +355,7 @@ void nn_forward(NN nn){
 
 float nn_cost(NN nn, Mat ti, Mat to){
     NEURALNETWORK_ASSERT(ti.rows == to.rows);
-    NEURALNETWORK_ASSERT(to.cols == NN_OUTPUT(nn).cols);
+    NEURALNETWORK_ASSERT(NN_OUTPUT(nn).cols == to.cols);
     size_t n = ti.rows;
 
     float c = 0; 
@@ -370,6 +372,63 @@ float nn_cost(NN nn, Mat ti, Mat to){
         }
     }
     return c/n;
+}
+
+void nn_backprop(NN nn, NN g, Mat ti, Mat to){
+    //each row of the ti is i/p and to is o/p
+    //so input and output matrix row should be equal
+    NEURALNETWORK_ASSERT(ti.rows == to.rows);
+    NEURALNETWORK_ASSERT(NN_OUTPUT(nn).cols == to.cols);
+    size_t n = ti.rows;
+
+    //filling the neural network with 0s
+    nn_zero(g);
+
+    //i - current sample
+    //l - current layer
+    //j - current activation
+    //k - previous activation
+
+    for(size_t i=0; i<n; i++){
+        //need to forward the current sample, which is basically the current row
+        //copy that row into the input of the nn
+        mat_copy(NN_INPUT(nn), mat_row(ti,i));
+        //feed forward the nn, i.e. activating everything i.e. putting the data through the nn
+        nn_forward(nn);
+
+        for(size_t j = 0; j<=nn.count; i++){
+            mat_fill(g.as[j],0);
+        }
+        //compare the output of the neural network with the original output of the training data
+        //store the diff in the weights in the gradient nn
+        for(size_t j=0; j<n; j++){
+            MAT_AT(NN_OUTPUT(g),0,j) = MAT_AT(NN_OUTPUT(nn),0,j) - MAT_AT(to, i, j);
+        }
+        //now iterate over the layers
+        for(size_t l = nn.count; l>0; l--){
+            //for each layer we need to start  iterating the activations of the each layer
+            //iterating the current activations
+            //nn.as[l] -> activations of the layer l
+            for(size_t j=0; j<nn.as[l].cols; j++){
+                //for the current activation, we need to iterate over all the activations in the previous layer
+                float a = MAT_AT(nn.as[l],0,j);
+                float da = MAT_AT(g.as[l], 0, j);
+                MAT_AT(g.bs[l-1],0,j) += 2*da*a*(1-a);
+                //iterating all the previous activations
+                for(size_t k=0; k<nn.as[l-1].cols; k++){
+                    // j = weight matrix col
+                    // k = weight matrix row
+                    //activation from previous layer;
+                    float pa = MAT_AT(nn.as[l-1],0,k);
+                    float w = MAT_AT(nn.ws[l-1],k,j);
+                    //calculating the partial derivative with activation from prev layer
+                    MAT_AT(g.ws[l-1],k,j)+=2*da*a*(1-a)*pa;
+                    //aas we are iterating to the previous layer from current layer
+                    MAT_AT(g.as[l-1],0,k) += 2*da*a*(1-a)*w;
+                }
+            }
+        }
+    }
 }
 
 void nn_finite_diff(NN nn, NN nn_g, float eps, Mat ti, Mat to){
@@ -414,6 +473,15 @@ void nn_learn(NN nn, NN nn_g, float rate){
             }
         }
     }
+}
+
+void nn_zero(NN nn){
+    for(size_t i=0; i<nn.count; i++){
+        mat_fill(nn.ws[i],0);
+        mat_fill(nn.bs[i],0);
+        mat_fill(nn.as[i],0);
+    }
+    mat_fill(nn.as[nn.count],0);
 }
 
 #endif // NEURALNETWORK_IMPLEMENTATION
